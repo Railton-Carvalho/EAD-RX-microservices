@@ -1,2 +1,4 @@
-package com.rxead.authuser.services;public interface UserService {
+package com.rxead.authuser.services;
+
+public interface UserService {
 }

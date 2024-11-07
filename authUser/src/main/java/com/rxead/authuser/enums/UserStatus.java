@@ -1,2 +1,7 @@
-package com.rxead.authuser.enums;public class UserStatus {
+package com.rxead.authuser.enums;
+
+public enum UserStatus {
+    ACTIVE,
+    BLOCKED
+
 }
