@@ -1,1 +1,18 @@
-spring.application.name=authuser
+
+server:
+  port: 8087
+
+spring:
+  datasource:
+    url:  jdbc:postgresql://localhost:5433/ead-authuser
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+      jdbc:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        lob.non-contextual-creation: true
+    properties:
+      hibernate:
+        show_sql: true
