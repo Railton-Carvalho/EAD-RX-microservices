@@ -3,15 +3,16 @@ package com.rxead.course.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rxead.course.enums.CourseLevel;
 import com.rxead.course.enums.CourseStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -19,7 +20,7 @@ import java.util.UUID;
 @Data
 @Table(name = "TB_COURSE")
 @NoArgsConstructor
-public class Course implements Serializable {
+public class CourseModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -54,5 +55,9 @@ public class Course implements Serializable {
 
     @Column(nullable = false)
     private UUID userInstructor;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "course")
+    private Set<ModuleModel> modules;
 
 }
