@@ -1,2 +1,4 @@
-package com.rxead.course.services;public interface LessonService {
+package com.rxead.course.services;
+
+public interface LessonService {
 }

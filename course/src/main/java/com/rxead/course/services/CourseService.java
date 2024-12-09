@@ -1,2 +1,7 @@
-package com.rxead.course.services.impl;public interface CourseService {
+package com.rxead.course.services;
+
+public interface CourseService {
+
+
+
 }
