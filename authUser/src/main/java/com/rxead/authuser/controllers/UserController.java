@@ -7,8 +7,11 @@ import com.rxead.authuser.enums.UserStatus;
 import com.rxead.authuser.enums.UserType;
 import com.rxead.authuser.models.UserModel;
 import com.rxead.authuser.services.UserService;
+import com.rxead.authuser.specifications.SpecificationTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +31,10 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserModel>> getAllUsers() {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
+    public ResponseEntity<Page<UserModel>> getAllUsers(
+            SpecificationTemplate.UserSpec spec
+            ,Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findAll(spec, pageable));
     }
 
     @PostMapping
