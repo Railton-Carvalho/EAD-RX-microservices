@@ -1,6 +1,6 @@
 
 server:
-  port: 802
+  port: 8082
 spring:
   datasource:
     url:  jdbc:postgresql://localhost:5433/ead-course
