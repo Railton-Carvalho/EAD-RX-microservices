@@ -6,6 +6,8 @@ import com.rxead.course.services.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +19,27 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/courses")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+    @GetMapping
+    public ResponseEntity<Page<CourseModel>> getAllCourses(Pageable pageable){
+        Page<CourseModel> courseList = courseService.findAll(pageable);
+
+        return ResponseEntity.ok().body(courseList);
+    }
+
+    @GetMapping("/{courseId}")
+    public ResponseEntity<Object> getOneCourse(@PathVariable(value = "courseId") UUID courseId){
+        Optional<CourseModel> courseModel = courseService.findById(courseId);
+        if (!courseModel.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
+
+        return ResponseEntity.ok().body(courseModel.get());
+    }
+
 
     @PostMapping
     public ResponseEntity<Object> saveCourse(@RequestBody @Valid CourseDto courseDto){
@@ -32,7 +51,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{courseId}")
-    public ResponseEntity<Object> deleteCourse(@RequestParam(value = "courseId") UUID courseId){
+    public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId") UUID courseId){
         Optional<CourseModel> courseModel = courseService.findById(courseId);
         if (!courseModel.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
         courseService.delete(courseModel.get());
@@ -40,7 +59,7 @@ public class CourseController {
     }
 
     @PutMapping("/{courseId}")
-    public ResponseEntity<Object> updateCourse(@RequestParam(value = "courseId") UUID courseId,
+    public ResponseEntity<Object> updateCourse(@PathVariable(value = "courseId") UUID courseId,
                                                @RequestBody @Valid CourseDto courseDto){
         Optional<CourseModel> courseModelOptional = courseService.findById(courseId);
         if (!courseModelOptional.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");

@@ -9,6 +9,8 @@ import com.rxead.course.repositories.LessonRepository;
 import com.rxead.course.repositories.ModuleRepository;
 import com.rxead.course.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -52,5 +54,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Optional<CourseModel> findById(UUID courseId) {
         return courseRepository.findById(courseId);
+    }
+
+    @Override
+    public Page<CourseModel> findAll(Pageable pageable) {
+        return courseRepository.findAll(pageable);
     }
 }
