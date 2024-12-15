@@ -1,5 +1,6 @@
 package com.rxead.course.services;
 
+import com.rxead.course.models.LessonModel;
 import com.rxead.course.models.ModuleModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,11 +15,12 @@ public interface ModuleService {
 
     ModuleModel save(ModuleModel moduleModel);
 
-    Optional<ModuleModel> findById(UUID courseId);
+    Optional<ModuleModel> findById(UUID moduleId);
 
     Optional<ModuleModel> findModuleIntoCourse(UUID courseId, UUID moduleId);
 
     Page<ModuleModel> findAll(Pageable pageable);
 
     List<ModuleModel> findAllByCourse(UUID courseId);
+
 }
