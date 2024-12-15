@@ -3,11 +3,13 @@ package com.rxead.course.controllers;
 import com.rxead.course.dtos.CourseDto;
 import com.rxead.course.models.CourseModel;
 import com.rxead.course.services.CourseService;
+import com.rxead.course.specification.SpecificationTemplate;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +28,10 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping
-    public ResponseEntity<Page<CourseModel>> getAllCourses(Pageable pageable){
-        Page<CourseModel> courseList = courseService.findAll(pageable);
+    public ResponseEntity<Page<CourseModel>> getAllCourses(SpecificationTemplate.CourseSpec spec,
+                                                           @PageableDefault(size =10, sort = "courseId") Pageable pageable){
+
+        Page<CourseModel> courseList = courseService.findAll(spec, pageable);
 
         return ResponseEntity.ok().body(courseList);
     }

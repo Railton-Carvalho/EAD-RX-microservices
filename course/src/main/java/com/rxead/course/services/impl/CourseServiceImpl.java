@@ -1,6 +1,5 @@
 package com.rxead.course.services.impl;
 
-import com.rxead.course.dtos.CourseDto;
 import com.rxead.course.models.CourseModel;
 import com.rxead.course.models.LessonModel;
 import com.rxead.course.models.ModuleModel;
@@ -11,6 +10,7 @@ import com.rxead.course.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -57,7 +57,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Page<CourseModel> findAll(Pageable pageable) {
-        return courseRepository.findAll(pageable);
+    public Page<CourseModel> findAll(Specification<CourseModel> spec, Pageable pageable) {
+        return courseRepository.findAll(spec, pageable);
     }
 }
