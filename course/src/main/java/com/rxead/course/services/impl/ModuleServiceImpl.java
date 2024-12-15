@@ -40,8 +40,8 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public Optional<ModuleModel> findById(UUID courseId) {
-        return Optional.empty();
+    public Optional<ModuleModel> findById(UUID moduleId) {
+        return moduleRepository.findById(moduleId);
     }
 
     @Override
