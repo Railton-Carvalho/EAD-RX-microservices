@@ -4,6 +4,7 @@ import com.rxead.course.models.LessonModel;
 import com.rxead.course.models.ModuleModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,4 +24,5 @@ public interface ModuleService {
 
     List<ModuleModel> findAllByCourse(UUID courseId);
 
+    Page<ModuleModel> findAllByCourse(Specification<ModuleModel> spec, Pageable pageable);
 }

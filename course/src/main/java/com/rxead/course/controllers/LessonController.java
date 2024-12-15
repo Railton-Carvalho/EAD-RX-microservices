@@ -5,9 +5,13 @@ import com.rxead.course.models.LessonModel;
 import com.rxead.course.models.ModuleModel;
 import com.rxead.course.services.LessonService;
 import com.rxead.course.services.ModuleService;
+import com.rxead.course.specification.SpecificationTemplate;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +33,10 @@ public class LessonController {
     private ModuleService moduleService;
 
     @GetMapping("/modules/{moduleId}/lessons")
-    public ResponseEntity<List<LessonModel>> getAllLessons(@PathVariable(value = "moduleId") UUID moduleId){
-        return ResponseEntity.ok().body(lessonService.findAllByModule(moduleId));
+    public ResponseEntity<Page<LessonModel>> getAllLessons(@PathVariable(value = "moduleId") UUID moduleId,
+                                                           SpecificationTemplate.LessonSpec spec,
+                                                           @PageableDefault(size = 10, sort = "lessonId") Pageable pageable){
+        return ResponseEntity.ok().body(lessonService.findAllByModule(SpecificationTemplate.lessonModuleId(moduleId).and(spec), pageable));
     }
 
     @GetMapping("/modules/{moduleId}/lessons/{lessonId}")
